@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ContactService from '../services/ContactService.js'
-export default class ContactDetailsPage extends Component {
+export default class ContactEditPage extends Component {
     state = { contact: null }
     componentDidMount() {
         this.loadContact()
@@ -15,22 +15,23 @@ export default class ContactDetailsPage extends Component {
         const contact = await ContactService.getContactById(this.props.match.params.id)
         this.setState({ contact })
     }
-    goBack=()=>{
-        this.props.history.push('/contact')
-    }
-    goToEditPage=()=>{
-        this.props.history.push('/contact/edit/'+this.props.match.params.id)
+
+    changeInput = async (ev) => {
+        const field = ev.target.name;
+        let value = ev.target.value;
+        let contact=this.state.contact
+        await this.setState(prevState => ({ filterBy: { ...prevState.filterBy, [field]: value } }))
+        this.props.onSetFilter(this.state.filterBy)
     }
     render() {
         if (!this.state.contact) return 'loading...'
         return (
             <div className="contact-details-container flex column align-center">
-                <p>Name: {this.state.contact.name}</p>
+                <p>Name: <input type="text" name="" onChange={this.changeInput} value={this.state.contact.name}/></p>
                 <p>Email: {this.state.contact.email}</p>
                 <p>Phone: {this.state.contact.phone}</p>
-                <img src={`https://robohash.org/${this.state.contact._id}`} alt=""/>
-                <button onClick={this.goBack}>Back</button>
-                <button onClick={this.goToEditPage}>Edit</button>
+                <img src={`https://robohash.org/${this.state.contact._id}`} alt="" />
+               
             </div>
         )
     }
