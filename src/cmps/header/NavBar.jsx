@@ -5,13 +5,18 @@ export default class NavBar extends Component {
         return (
             <div className="navbar-container flex">
                 <div className='link-container'>
-                    <NavLink activeClassName="active" to='/'>
+                    <NavLink exact={true} className="navbar-link" activeClassName="active" to='/'>
                         Home
                     </NavLink>
                 </div>
                 <div className='link-container'>
-                    <NavLink activeClassName="active" to='/contact'>
-                       Contact
+                    <NavLink exact={true} className="navbar-link" activeClassName="active" to='/contact'>
+                        Contact
+                    </NavLink>
+                </div>
+                <div className='link-container'>
+                    <NavLink exact={true} className="navbar-link" activeClassName="active" to='/contact/edit/'>
+                        Add new
                     </NavLink>
                 </div>
             </div>
