@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import ContactService from '../services/ContactService.js'
-export default class ContactEditPage extends Component {
+import { observer, inject } from 'mobx-react'
+
+@inject('contactStore')
+@observer
+ class ContactEditPage extends Component {
     state = { contact: null }
     componentDidMount() {
         if (this.props.match.params.id) this.loadContact()
@@ -24,8 +28,9 @@ export default class ContactEditPage extends Component {
         this.setState({ contact })
     }
     loadContact = async () => {
-        const contact = await ContactService.getContactById(this.props.match.params.id)
-        this.setState({ contact })
+       await this.props.contactStore.getContactById(this.props.match.params.id)
+       const {currentContact}=this.props.contactStore
+        this.setState({contact: currentContact })
     }
 
     changeInput = async (ev) => {
@@ -65,3 +70,4 @@ export default class ContactEditPage extends Component {
         )
     }
 }
+export default ContactEditPage

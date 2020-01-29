@@ -15,7 +15,7 @@ function App() {
       <Header/>
         <Switch>
           <Route component={HomePage} path="/" exact></Route>
-          <Route component={ContactPage} path="/contact" exact></Route>
+          <Route path="/contact" exact render={()=><ContactPage/ >} ></Route>
           <Route component={ContactEditPage} path="/contact/edit/:id?" exact></Route>
           <Route component={ContactDetailsPage} path="/contact/:id" exact></Route>
           <Route component={NotFoundPage} path="/"></Route>
